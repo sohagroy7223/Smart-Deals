@@ -27,6 +27,12 @@ async function run() {
     const smartDb = client.db("smartDb");
     const productsCollection = smartDb.collection("products");
 
+    app.post("/products", async (req, res) => {
+      const newProducts = req.body;
+      const result = await productsCollection.insertOne(newProducts);
+      res.send(result);
+    });
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!",
