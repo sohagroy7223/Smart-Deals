@@ -28,11 +28,19 @@ async function run() {
     const productsCollection = smartDb.collection("products");
 
     app.get("/products", async (req, res) => {
+      const projectsFields = {
+        title: 1,
+        price_min: 1,
+        price_max: 1,
+        image: 1,
+        seller_name: 1,
+      };
       const cursor = productsCollection
         .find()
         .sort({ _id: -1 })
-        .limit(6)
-        .skip(4);
+        .limit(10)
+        .skip(4)
+        .project(projectsFields);
       const result = await cursor.toArray();
       res.send(result);
     });
