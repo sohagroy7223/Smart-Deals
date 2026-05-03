@@ -28,7 +28,11 @@ async function run() {
     const productsCollection = smartDb.collection("products");
 
     app.get("/products", async (req, res) => {
-      const cursor = productsCollection.find();
+      const cursor = productsCollection
+        .find()
+        .sort({ _id: -1 })
+        .limit(6)
+        .skip(4);
       const result = await cursor.toArray();
       res.send(result);
     });
