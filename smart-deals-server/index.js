@@ -26,6 +26,7 @@ async function run() {
 
     const smartDb = client.db("smartDb");
     const productsCollection = smartDb.collection("products");
+    const bidsCollection = smartDb.collection("bids");
 
     app.get("/products", async (req, res) => {
       // customize product details ***
@@ -88,6 +89,18 @@ async function run() {
         },
       };
       const result = await productsCollection.updateOne(query, update);
+      res.send(result);
+    });
+
+    app.get("/bids", async (req, res) => {
+      const email = req.query.email;
+      const query = {};
+      if (email) {
+        query.buyer_email = email;
+      }
+
+      const cursor = bidsCollection.find(query);
+      const result = await cursor.toArray();
       res.send(result);
     });
 
