@@ -92,6 +92,8 @@ async function run() {
       res.send(result);
     });
 
+    // bids related api
+
     app.get("/bids", async (req, res) => {
       const email = req.query.email;
       const query = {};
@@ -110,9 +112,18 @@ async function run() {
       res.send(result);
     });
 
+    // find all user data
     app.get("bids", async (req, res) => {
       const cursor = bidsCollection.find();
       const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    // find single user data
+    app.get("/bids/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await bidsCollection.findOne(query);
       res.send(result);
     });
 
