@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h2 className="text-green-700 text-center">Get started</h2>
+      <h1>Get started</h1>
     </>
   );
 }
