@@ -110,6 +110,19 @@ async function run() {
       res.send(result);
     });
 
+    app.get("bids", async (req, res) => {
+      const cursor = bidsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.delete("/bids/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await bidsCollection.deleteOne(query);
+      res.send(result);
+    });
+
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!",
