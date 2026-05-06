@@ -1,5 +1,5 @@
 import { use } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
@@ -53,7 +53,9 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <p>{email}</p>
-        <a className="btn">Button</a>
+        <button className="btn bg-green-600 text-white">
+          <Link to="/login">Sign In</Link>
+        </button>
       </div>
     </div>
   );

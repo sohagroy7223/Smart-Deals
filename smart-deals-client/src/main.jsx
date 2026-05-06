@@ -8,6 +8,8 @@ import Root from "./Components/Layout/Root";
 import Home from "./Components/Home/Home";
 import AllProducts from "./Components/AllProducts/AllProducts";
 import AuthProvider from "./Context/AuthProvider";
+import Login from "./Components/Login/Login";
+import Register from "./Components/Register/Register";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: "/allProducts",
         Component: AllProducts,
+      },
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "/register",
+        Component: Register,
       },
     ],
   },
