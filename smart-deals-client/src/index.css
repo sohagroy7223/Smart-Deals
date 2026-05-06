@@ -3,6 +3,6 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: blue;
+  --color-primary: "bg-gradient-to-r from-Linear-#632EE3 via-purple-500 to-Linear-#9F62F2";
   --color-secondary: teal;
 }

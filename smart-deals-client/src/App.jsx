@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       <h1 className="">Get started</h1>
-      <button className="btn">click me</button>
+      <button className="btn bg-blue-400">click me</button>
     </>
   );
 }
