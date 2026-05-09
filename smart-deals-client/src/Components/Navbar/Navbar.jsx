@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
-  const { email } = use(AuthContext);
+  const { user } = use(AuthContext);
 
   const link = (
     <>
@@ -13,6 +13,16 @@ const Navbar = () => {
       <li>
         <NavLink to="/allProducts">All Products</NavLink>
       </li>
+      {user && (
+        <>
+          <li>
+            <Link to="/products">My Products</Link>
+          </li>
+          <li>
+            <Link to="/bids">My Bids</Link>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -52,10 +62,15 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{link}</ul>
       </div>
       <div className="navbar-end">
-        <p>{email}</p>
-        <button className="btn bg-green-600 text-white">
-          <Link to="/login">Sign In</Link>
-        </button>
+        {user ? (
+          <button className="btn bg-green-600 text-white">
+            <Link to="/login">Sign out</Link>
+          </button>
+        ) : (
+          <button className="btn bg-green-600 text-white">
+            <Link to="/login">Sign In</Link>
+          </button>
+        )}
       </div>
     </div>
   );
