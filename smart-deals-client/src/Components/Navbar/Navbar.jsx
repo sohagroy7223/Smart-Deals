@@ -78,11 +78,11 @@ const Navbar = () => {
             onClick={handelLogOut}
             className="btn bg-green-600 text-white"
           >
-            <Link to="/login">Sign out</Link>
+            Sign out
           </button>
         ) : (
           <button className="btn bg-green-600 text-white">
-            <Link to="/register">Sign In</Link>
+            <Link to="/login">Sign In</Link>
           </button>
         )}
       </div>
