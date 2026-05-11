@@ -25,8 +25,16 @@ async function run() {
     await client.connect();
 
     const smartDb = client.db("smartDb");
+
     const productsCollection = smartDb.collection("products");
     const bidsCollection = smartDb.collection("bids");
+    const userCollection = smartDb.collection("user");
+
+    app.post("/users", async (req, res) => {
+      const newUser = req.body;
+      const result = await userCollection.insertOne(newUser);
+      res.send(result);
+    });
 
     app.get("/products", async (req, res) => {
       // customize product details ***

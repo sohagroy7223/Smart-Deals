@@ -16,6 +16,23 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
+        const newUsers = {
+          name: result.user.displayName,
+          email: result.user.email,
+        };
+
+        // create user in the database
+        fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newUsers),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("after save user data in database", data);
+          });
       })
       .catch((error) => {
         console.log(error);
