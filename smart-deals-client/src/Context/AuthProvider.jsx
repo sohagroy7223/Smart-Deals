@@ -1,7 +1,9 @@
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.init";
@@ -38,10 +40,17 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+
+    return signInWithPopup(auth, provider);
+  };
+
   const userInfo = {
     createUser,
     loginUser,
     logOut,
+    signInWithGoogle,
     user,
     loading,
   };

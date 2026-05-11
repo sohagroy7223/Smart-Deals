@@ -28,9 +28,9 @@ const Navbar = () => {
 
   const handelLogOut = () => {
     logOut()
-      .then((result) => {
+      .then(() => {
+        // console.log(result);
         alert("Sign-out successful.");
-        console.log(result);
       })
       .catch((error) => {
         console.log(error);

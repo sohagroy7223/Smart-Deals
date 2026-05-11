@@ -32,8 +32,16 @@ async function run() {
 
     app.post("/users", async (req, res) => {
       const newUser = req.body;
-      const result = await userCollection.insertOne(newUser);
-      res.send(result);
+      const email = newUser.email;
+      const query = { email: email };
+      const existingUser = await userCollection.findOne(query);
+
+      if (existingUser) {
+        console.log("this user already sign up ");
+      } else {
+        const result = await userCollection.insertOne(newUser);
+        res.send(result);
+      }
     });
 
     app.get("/products", async (req, res) => {
