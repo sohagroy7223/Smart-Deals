@@ -49,6 +49,7 @@ const Register = () => {
             type="text"
             className="input"
             name="name"
+            required
             autoComplete="username"
             placeholder="Your name"
           />
@@ -57,6 +58,7 @@ const Register = () => {
             type="text"
             className="input"
             name="image"
+            required
             placeholder="Image url"
           />
           <label className="label">Email</label>
@@ -64,6 +66,7 @@ const Register = () => {
             type="email"
             className="input"
             name="email"
+            required
             autoComplete="email"
             placeholder="Email"
           />
@@ -72,6 +75,7 @@ const Register = () => {
             type="password"
             className="input"
             name="password"
+            required
             autoComplete="current-password"
             placeholder="Password"
           />

@@ -37,7 +37,7 @@ async function run() {
       const existingUser = await userCollection.findOne(query);
 
       if (existingUser) {
-        console.log("this user already sign up ");
+        console.log({ massage: "this user already sign up " });
       } else {
         const result = await userCollection.insertOne(newUser);
         res.send(result);

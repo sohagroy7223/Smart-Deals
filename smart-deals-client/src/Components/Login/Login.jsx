@@ -13,6 +13,7 @@ const Login = () => {
         const newUsers = {
           name: result.user.displayName,
           email: result.user.email,
+          image: result.user.photoURL,
         };
         // send user in database
 
