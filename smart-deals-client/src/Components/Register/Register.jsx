@@ -3,7 +3,8 @@ import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Register = () => {
-  const { createUser, setUser, updateUserProfile } = use(AuthContext);
+  const { createUser, setUser, updateUserProfile, emailVerification } =
+    use(AuthContext);
 
   const handelRegister = (e) => {
     e.preventDefault();
@@ -17,6 +18,9 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
+        emailVerification().then(() => {
+          alert("please check your email and verified your email");
+        });
         console.log(user);
         const newUsers = {
           name: name,
