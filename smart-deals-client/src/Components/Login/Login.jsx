@@ -1,10 +1,11 @@
-import { use } from "react";
+import { use, useRef } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Login = () => {
-  const { loginUser, signInWithGoogle } = use(AuthContext);
+  const { loginUser, signInWithGoogle, resetPassword } = use(AuthContext);
   // console.log(loginUser);
+  const emailRef = useRef();
 
   const handelGoogleLogin = () => {
     signInWithGoogle()
@@ -49,6 +50,13 @@ const Login = () => {
       });
   };
 
+  const handelResetPassword = () => {
+    const email = emailRef.current.value;
+    resetPassword(email).then(() => {
+      alert("we send reset password mail, please check your email");
+    });
+  };
+
   return (
     <div className="card bg-base-100 w-full mx-auto items-center mt-20 max-w-sm shrink-0 shadow-2xl">
       <h2 className="text-3xl font-bold">Login now!</h2>
@@ -59,6 +67,7 @@ const Login = () => {
             type="email"
             className="input"
             name="email"
+            ref={emailRef}
             autoComplete="email"
             placeholder="Email"
           />
@@ -71,7 +80,9 @@ const Login = () => {
             placeholder="Password"
           />
           <div>
-            <a className="link link-hover">Forgot password?</a>
+            <a onClick={handelResetPassword} className="link link-hover">
+              Forgot password?
+            </a>
           </div>
           <button className="btn btn-neutral mt-4">Login</button>
         </form>
