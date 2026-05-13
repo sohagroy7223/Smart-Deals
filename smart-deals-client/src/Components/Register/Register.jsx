@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Register = () => {
-  const { createUser } = use(AuthContext);
+  const { createUser, setUser, updateUserProfile } = use(AuthContext);
 
   const handelRegister = (e) => {
     e.preventDefault();
@@ -15,11 +15,22 @@ const Register = () => {
 
     createUser(email, password)
       .then((result) => {
-        console.log(result.user);
+        const user = result.user;
+        setUser(user);
+        console.log(user);
         const newUsers = {
-          name: result.user.displayName,
-          email: result.user.email,
+          name: name,
+          email: email,
+          photo: image,
         };
+        updateUserProfile({ displayName: name, photoURL: image })
+          .then(() => {
+            setUser({ ...user, displayName: name, photoURL: image });
+          })
+          .catch((error) => {
+            console.log(error.message);
+            setUser(user);
+          });
 
         // create user in the database
         fetch("http://localhost:3000/users", {
