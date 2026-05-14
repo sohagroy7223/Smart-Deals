@@ -3,6 +3,13 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: "bg-gradient-to-r from-Linear-#9F62F2 via-purple-500 to-Linear-#632EE3";
+  --color-primary: #632ee3;
   --color-secondary: teal;
+}
+
+/* custom btn color */
+.btn-primary {
+  background: linear-gradient(to right, #632ee3, #9f62f2);
+  border: none;
+  color: white;
 }
