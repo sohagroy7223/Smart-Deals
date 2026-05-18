@@ -30,6 +30,7 @@ async function run() {
     const bidsCollection = smartDb.collection("bids");
     const userCollection = smartDb.collection("user");
 
+    // USERS APIS
     app.post("/users", async (req, res) => {
       const newUser = req.body;
       const email = newUser.email;
@@ -44,6 +45,7 @@ async function run() {
       }
     });
 
+    // PRODUCTS APIS
     app.get("/products", async (req, res) => {
       // customize product details ***
 
@@ -69,6 +71,15 @@ async function run() {
       }
 
       const cursor = productsCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/latest-products", async (req, res) => {
+      const cursor = productsCollection
+        .find()
+        .limit(6)
+        .sort({ created_at: -1 });
       const result = await cursor.toArray();
       res.send(result);
     });
@@ -108,8 +119,7 @@ async function run() {
       res.send(result);
     });
 
-    // bids related api
-
+    // BIDS RELATED APIS
     app.get("/bids", async (req, res) => {
       const email = req.query.email;
       const query = {};
