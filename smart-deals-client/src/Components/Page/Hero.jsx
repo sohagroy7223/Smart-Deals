@@ -19,7 +19,7 @@ const Hero = () => {
             type="text"
             placeholder="search For Products, Categories..."
           />
-          <button className="absolute ml-111 bg-primary text-white p-3 rounded-2xl cursor-pointer">
+          <button className="absolute md:ml-60 lg:ml-100 ml-42 bg-primary text-white p-3 rounded-2xl cursor-pointer">
             <FaSearch></FaSearch>
           </button>
         </div>
