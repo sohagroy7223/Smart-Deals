@@ -1,11 +1,12 @@
 import { use, useRef } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Login = () => {
   const { loginUser, signInWithGoogle, resetPassword } = use(AuthContext);
   // console.log(loginUser);
   const emailRef = useRef();
+  const navigate = useNavigate();
 
   const handelGoogleLogin = () => {
     signInWithGoogle()
@@ -44,6 +45,7 @@ const Login = () => {
     loginUser(email, password)
       .then((result) => {
         console.log(result.user);
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);

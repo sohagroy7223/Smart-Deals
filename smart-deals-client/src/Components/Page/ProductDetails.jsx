@@ -1,6 +1,8 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const ProductDetails = () => {
+  const navigate = useNavigate();
   const data = useLoaderData();
   const {
     image,
@@ -26,7 +28,7 @@ const ProductDetails = () => {
       {/* left side */}
       <div className="w-6/12">
         <img
-          className="w-140 h-90 bg-cover rounded-xl p-2"
+          className="w-140 h-100 bg-cover rounded-xl p-2"
           src={image}
           alt=""
         />
@@ -46,6 +48,14 @@ const ProductDetails = () => {
       </div>
       {/* right side */}
       <div className=" mt-6 space-y-5 p-3 w-6/12">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center cursor-pointer"
+        >
+          {" "}
+          <IoIosArrowRoundBack size={26}></IoIosArrowRoundBack>{" "}
+          <p>back to product</p>
+        </button>
         <h2 className="text-4xl font-bold">{title}</h2>
         <div className="bg-white p-3">
           <h3 className="text-green-600 text-xl font-bold">

@@ -1,10 +1,11 @@
 import { use } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Register = () => {
   const { createUser, setUser, updateUserProfile, emailVerification } =
     use(AuthContext);
+  const navigate = useNavigate();
 
   const handelRegister = (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const Register = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
+        navigate("/");
         emailVerification().then(() => {
           alert("please check your email and verified your email");
         });
