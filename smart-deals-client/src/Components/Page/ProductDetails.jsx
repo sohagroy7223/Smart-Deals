@@ -16,7 +16,7 @@ const ProductDetails = () => {
     title,
     price_min,
     price_max,
-    _id,
+    _id: productId,
     created_at,
     seller_name,
     seller_image,
@@ -37,7 +37,25 @@ const ProductDetails = () => {
     const name = e.target.name.value;
     const email = e.target.email.value;
     const bids = e.target.bids.value;
-    console.log(name, email, bids);
+    console.log(productId, name, email, bids);
+    const newBid = {
+      product: productId,
+      buyer_name: name,
+      buyer_email: email,
+      bid_price: bids,
+      status: "pending",
+    };
+    fetch("http://localhost:3000/bids", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newBid),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("after fetching data", data);
+      });
   };
 
   return (
@@ -87,7 +105,7 @@ const ProductDetails = () => {
             <b>category</b>: {category}
           </h3>
           <h3>
-            <b>Product ID</b> : {_id}
+            <b>Product ID</b> : {productId}
           </h3>
           <h3>
             <b>Posted</b> : {new Date(created_at).toLocaleDateString()}
@@ -120,7 +138,7 @@ const ProductDetails = () => {
 
           <dialog
             ref={modelRef}
-            className="$$modal mx-auto w-100 items-center $$modal-bottom sm:$$modal-middle"
+            className="$$modal mx-auto md:w-96 mt-11 items-center $$modal-bottom sm:$$modal-middle"
           >
             <div className="$$modal-box p-2">
               <h3 className="font-bold text-lg text-center">
@@ -134,6 +152,8 @@ const ProductDetails = () => {
                     type="text"
                     className="input"
                     name="name"
+                    readOnly
+                    required
                     defaultValue={user.displayName}
                   />
                   <label className="label">Email</label>
@@ -141,18 +161,20 @@ const ProductDetails = () => {
                     type="email"
                     className="input"
                     name="email"
+                    readOnly
+                    required
                     defaultValue={user.email}
                   />
+
                   <label className="label">your Bids</label>
                   <input
                     type="text"
                     className="input"
                     name="bids"
+                    required
                     placeholder="your Bids"
                   />
-                  <button className="btn  btn-neutral mt-4">
-                    Submits Bids
-                  </button>
+                  <button className="btn  btn-neutral mt-4">Submit Bids</button>
                 </form>
                 <form method="dialog">
                   {/* if there is a button in form, it will close the modal */}
