@@ -1,10 +1,11 @@
 import { useLoaderData, useNavigate } from "react-router";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { use, useRef } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 
 const ProductDetails = () => {
+  const [bids, setBids] = useState([]);
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   const data = useLoaderData();
@@ -29,6 +30,15 @@ const ProductDetails = () => {
   } = data;
   // console.log(data);
 
+  useEffect(() => {
+    fetch(`http://localhost:3000/products/bids/${productId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("bids for this products", data);
+        setBids(data);
+      });
+  }, [productId]);
+
   const handelModalOpen = () => {
     modelRef.current.showModal();
   };
@@ -43,6 +53,7 @@ const ProductDetails = () => {
       product: productId,
       buyer_name: name,
       buyer_email: email,
+      buyer_image: user?.photoURL,
       bid_price: bids,
       status: "pending",
     };
@@ -59,9 +70,9 @@ const ProductDetails = () => {
         modelRef.current.close();
         if (data.insertedId) {
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
-            title: "Your work has been saved",
+            title: "Your bids has been placed",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -190,7 +201,7 @@ const ProductDetails = () => {
                       placeholder="your Bids"
                     />
                     <button className="btn  btn-neutral mt-4">
-                      Submit Bids
+                      Please your Bids
                     </button>
                   </form>
                   <form method="dialog">
@@ -203,7 +214,60 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      <div></div>
+      <div>
+        <h3 className="text-3xl font-bold mt-10">
+          Bids For This Products:{" "}
+          <span className="text-primary">{bids.length}</span>
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>SL No</th>
+                <th>Buyer Name</th>
+                <th>Buyer email</th>
+                <th>Bids Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {bids.map((bid, index) => (
+                <tr key={bid._id}>
+                  <th>
+                    <label>{index + 1}</label>
+                  </th>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-12 w-12">
+                          <img
+                            src={
+                              bid?.buyer_image ||
+                              "https://img.icons8.com/?size=100&id=7819&format=png&color=000000"
+                            }
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">{bid.buyer_name}</div>
+                        <div className="text-sm opacity-50">United States</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{bid.buyer_email}</td>
+                  <td>{bid.bid_price}</td>
+                  <th>
+                    <button className="btn btn-ghost btn-xs">details</button>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
