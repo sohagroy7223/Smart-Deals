@@ -9,7 +9,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handelGoogleLogin = () => {
-    signInWithGoogle()
+    signInWithGoogle();
+    navigate("/")
       .then((result) => {
         console.log(result.user);
         const newUsers = {

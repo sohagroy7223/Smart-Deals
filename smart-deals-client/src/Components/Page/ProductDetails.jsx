@@ -231,7 +231,7 @@ const ProductDetails = () => {
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-white">
               {/* row 1 */}
               {bids.map((bid, index) => (
                 <tr key={bid._id}>
