@@ -74,7 +74,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end flex gap-3">
         {user && (
-          <img className="rounded-full w-12 h-14" src={user.photoURL} alt="" />
+          <img className="rounded-full w-12 h-14" src={user?.photoURL} alt="" />
         )}
         {user ? (
           <button onClick={handelLogOut} className="btn btn-primary text-white">
