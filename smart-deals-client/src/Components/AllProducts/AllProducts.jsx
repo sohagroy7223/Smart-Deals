@@ -3,7 +3,7 @@ import Products from "../Page/Products";
 
 const AllProducts = () => {
   const allProducts = useLoaderData();
-  console.log(allProducts);
+  // console.log(allProducts);
   return (
     <div>
       <h3>All products is here</h3>

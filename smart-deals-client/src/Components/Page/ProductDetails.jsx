@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 
 const ProductDetails = () => {
   const [bids, setBids] = useState([]);
+
   const { user } = use(AuthContext);
   const navigate = useNavigate();
   const data = useLoaderData();
@@ -47,14 +48,14 @@ const ProductDetails = () => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
-    const bids = e.target.bids.value;
-    console.log(productId, name, email, bids);
+    const Bids = e.target.bids.value;
+    console.log(productId, name, email, Bids);
     const newBid = {
       product: productId,
       buyer_name: name,
       buyer_email: email,
       buyer_image: user?.photoURL,
-      bid_price: bids,
+      bid_price: Bids,
       status: "pending",
     };
     fetch("http://localhost:3000/bids", {
@@ -76,6 +77,11 @@ const ProductDetails = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          // add new bids in state
+          newBid._id = data.insertedId;
+          const newBids = [...bids, newBid];
+          console.log(newBids);
+          setBids(newBids);
         }
       });
   };

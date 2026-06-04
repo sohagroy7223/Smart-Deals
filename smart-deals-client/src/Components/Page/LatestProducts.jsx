@@ -1,8 +1,14 @@
 import { use } from "react";
 import Product from "../Product/Product";
+import { useNavigate } from "react-router";
 
 const LatestProducts = ({ latestProductsPromise }) => {
   const products = use(latestProductsPromise);
+  const navigate = useNavigate();
+
+  const showAllProduct = () => {
+    navigate("AllProducts");
+  };
   // console.log(products);
   return (
     <div className="text-center mt-15 ">
@@ -14,7 +20,12 @@ const LatestProducts = ({ latestProductsPromise }) => {
           <Product key={product._id} product={product}></Product>
         ))}
       </div>
-      <button className="btn bg-primary text-white mt-10">Show All</button>
+      <button
+        onClick={showAllProduct}
+        className="btn bg-primary text-white mt-10"
+      >
+        Show All
+      </button>
     </div>
   );
 };
