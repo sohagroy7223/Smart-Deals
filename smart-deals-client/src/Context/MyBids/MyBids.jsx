@@ -2,6 +2,7 @@ import { use } from "react";
 import { useEffect } from "react";
 import { AuthContext } from "../AuthContext";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const MyBids = () => {
   const { user } = use(AuthContext);
@@ -17,6 +18,37 @@ const MyBids = () => {
         });
     }
   }, [user.email]);
+
+  const handelDeleteBid = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed)
+        fetch(`http://localhost:3000/bids/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("after delete", data);
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+
+              const remainingBids = bids.filter((bid) => bid._id !== _id);
+              setBids(remainingBids);
+            }
+          });
+    });
+  };
 
   return (
     <div>
@@ -65,7 +97,12 @@ const MyBids = () => {
                   {bid.status}
                 </td>
                 <th>
-                  <div className="badge badge-outline">Remove Bid</div>
+                  <div
+                    onClick={() => handelDeleteBid(bid._id)}
+                    className="badge badge-outline cursor-pointer"
+                  >
+                    Remove Bid
+                  </div>
                 </th>
               </tr>
             ))}
