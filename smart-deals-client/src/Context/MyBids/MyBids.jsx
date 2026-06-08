@@ -13,7 +13,7 @@ const MyBids = () => {
       fetch(`http://localhost:3000/bids?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log("after fetching ", data);
+          // console.log("after fetching ", data);
           setBids(data);
         });
     }
@@ -35,7 +35,7 @@ const MyBids = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("after delete", data);
+            // console.log("after delete", data);
             if (data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",
@@ -93,9 +93,15 @@ const MyBids = () => {
                   </span>
                 </td>
                 <td>{bid.bid_price}</td>
-                <td className="badge-warning mt-6 badge badge-outline">
-                  {bid.status}
-                </td>
+                {bid.status === "pending" ? (
+                  <td className="badge-warning mt-6 badge badge-outline">
+                    {bid.status}
+                  </td>
+                ) : (
+                  <div className="badge badge-outline badge-success">
+                    Success
+                  </div>
+                )}
                 <th>
                   <div
                     onClick={() => handelDeleteBid(bid._id)}
