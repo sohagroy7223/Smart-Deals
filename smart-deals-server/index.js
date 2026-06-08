@@ -132,6 +132,16 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/bids", (req, res) => {
+      const query = {};
+      if (query.email) {
+        query.buyer_email = email;
+      }
+      const cursor = bidsCollection.find(query);
+      const result = cursor.toArray();
+      res.send(result);
+    });
+
     app.get("/products/bids/:productId", async (req, res) => {
       const productId = req.params.productId;
       const query = { product: productId };

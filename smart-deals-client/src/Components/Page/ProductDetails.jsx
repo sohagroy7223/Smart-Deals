@@ -80,7 +80,8 @@ const ProductDetails = () => {
           // add new bids in state
           newBid._id = data.insertedId;
           const newBids = [...bids, newBid];
-          console.log(newBids);
+          // console.log(newBids);
+          newBids.sort((a, b) => b.bid_price - a.bid_price);
           setBids(newBids);
         }
       });
