@@ -38,6 +38,12 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/myProducts", async (req, res) => {
+      const cursor = myProductsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     // USERS APIS
     app.post("/users", async (req, res) => {
       const newUser = req.body;

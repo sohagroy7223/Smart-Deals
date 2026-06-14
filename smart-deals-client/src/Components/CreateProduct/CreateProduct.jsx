@@ -45,6 +45,7 @@ const CreateProduct = () => {
       seller_Image: sellerImg,
       location: location,
       description: description,
+      status: "pending",
     };
 
     fetch("http://localhost:3000/myProducts/", {
