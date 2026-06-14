@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const MyProducts = () => {
   const [myProducts, setMyProducts] = useState([]);
@@ -6,23 +7,52 @@ const MyProducts = () => {
     fetch("http://localhost:3000/myProducts/")
       .then((res) => res.json())
       .then((data) => {
-        console.log("after fetching", data);
+        // console.log("after fetching", data);
         setMyProducts(data);
       });
   }, []);
+
+  const handelDeleteProduct = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/myProducts/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your product has been deleted.",
+                icon: "success",
+              });
+            }
+          });
+      }
+    });
+  };
+
   return (
     <div>
       <h3>
         my products all is here
-        <span className="text-primary font-bold">{myProducts.length}</span>
+        <span className="text-primary font-bold"> {myProducts.length}</span>
       </h3>
-      <div className="overflow-x-auto">
+      <span className="overflow-x-auto">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
               <th>#</th>
-              <th>Products Info</th>
+              <th>Products Image</th>
               <th>category</th>
               <th>Seller Info</th>
               <th>Price</th>
@@ -35,20 +65,19 @@ const MyProducts = () => {
             {myProducts.map((product, index) => (
               <tr key={product._id}>
                 <td>{index + 1}</td>
+
                 <td>
-                  <div className=" items-center gap-3">
-                    <div className="avatar">
-                      <div className=" h-12 w-12">
-                        <img src={product.productImg} alt="" />
-                      </div>
+                  <div className="avatar">
+                    <div className="h-12 w-12">
+                      <img src={product.productImg} alt="" />
                     </div>
                   </div>
                 </td>
+
                 <td>
-                  <div>
-                    <div className="font-bold">{product.category}</div>
-                  </div>
+                  <h3 className="font-bold">{product.category}</h3>
                 </td>
+
                 <td>
                   {product.seller_name}
                   <br />
@@ -56,26 +85,44 @@ const MyProducts = () => {
                     {product.seller_email}
                   </span>
                 </td>
+
                 <td>{product.maxPrice}</td>
-                {product.status === "pending" ? (
-                  <td className="badge-warning badge mt-6 badge-outline ">
-                    {product.status}
-                  </td>
-                ) : (
-                  <div className="badge badge-outline badge-success mt-6">
-                    Success
+
+                <td>
+                  {product.status === "pending" ? (
+                    <span className="badge badge-warning badge-outline">
+                      {product.status}
+                    </span>
+                  ) : (
+                    <span className="badge badge-success badge-outline">
+                      Success
+                    </span>
+                  )}
+                </td>
+
+                <td>
+                  <div className="flex gap-2">
+                    <button className="badge badge-info cursor-pointer">
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() => handelDeleteProduct(product._id)}
+                      className="badge badge-warning cursor-pointer"
+                    >
+                      Delete
+                    </button>
+
+                    <button className="badge badge-success cursor-pointer">
+                      Make Sold
+                    </button>
                   </div>
-                )}
-                <th>
-                  <div className="badge badge-outline cursor-pointer">
-                    Remove Bid
-                  </div>
-                </th>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </span>
     </div>
   );
 };

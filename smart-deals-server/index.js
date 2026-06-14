@@ -44,6 +44,20 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/myProducts/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await myProductsCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.delete("/myProducts/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await myProductsCollection.deleteOne(query);
+      res.send(result);
+    });
+
     // USERS APIS
     app.post("/users", async (req, res) => {
       const newUser = req.body;
