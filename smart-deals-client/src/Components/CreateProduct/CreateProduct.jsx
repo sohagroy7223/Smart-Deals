@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const CreateProduct = () => {
   const handelCreateProduct = (e) => {
     e.preventDefault();
@@ -14,21 +16,57 @@ const CreateProduct = () => {
     const sellerImg = e.target.image.value;
     const location = e.target.location.value;
     const description = e.target.description.value;
-    console.log(
-      title,
-      category,
-      minPrice,
-      maxPrice,
-      condition,
-      useTime,
-      productImg,
-      name,
-      email,
-      contact,
-      sellerImg,
-      location,
-      description,
-    );
+    // console.log(
+    //   title,
+    //   category,
+    //   minPrice,
+    //   maxPrice,
+    //   condition,
+    //   useTime,
+    //   productImg,
+    //   name,
+    //   email,
+    //   contact,
+    //   sellerImg,
+    //   location,
+    //   description,
+    // );
+    const newProduct = {
+      title: title,
+      category: category,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+      condition: condition,
+      useTime: useTime,
+      productImg: productImg,
+      seller_name: name,
+      seller_email: email,
+      contact: contact,
+      seller_Image: sellerImg,
+      location: location,
+      description: description,
+    };
+
+    fetch("http://localhost:3000/myProducts/", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newProduct),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("after fetching", data);
+        if (data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your product create has been success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
 
   return (

@@ -29,6 +29,14 @@ async function run() {
     const productsCollection = smartDb.collection("products");
     const bidsCollection = smartDb.collection("bids");
     const userCollection = smartDb.collection("user");
+    const myProductsCollection = smartDb.collection("myProducts");
+
+    // MyProducts APIS
+    app.post("/myProducts", async (req, res) => {
+      const newProducts = req.body;
+      const result = await myProductsCollection.insertOne(newProducts);
+      res.send(result);
+    });
 
     // USERS APIS
     app.post("/users", async (req, res) => {
