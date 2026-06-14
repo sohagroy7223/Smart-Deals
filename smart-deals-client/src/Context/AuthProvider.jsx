@@ -12,7 +12,7 @@ import {
 import { auth } from "../Firebase/Firebase.init";
 import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
-// import Loading from "../Components/Loading/Loading";
+import Loading from "../Components/Loading/Loading";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -74,9 +74,9 @@ const AuthProvider = ({ children }) => {
     loading,
   };
 
-  // if (loading) {
-  //   return Loading;
-  // }
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
   return <AuthContext value={userInfo}>{children}</AuthContext>;
 };

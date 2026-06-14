@@ -1,22 +1,55 @@
 const CreateProduct = () => {
+  const handelCreateProduct = (e) => {
+    e.preventDefault();
+    const title = e.target.productTitle.value;
+    const category = e.target.category.value;
+    const minPrice = e.target.minPrice.value;
+    const maxPrice = e.target.maxPrice.value;
+    const condition = e.target.condition.value;
+    const useTime = e.target.useTime.value;
+    const productImg = e.target.productImg.value;
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const contact = e.target.contact.value;
+    const sellerImg = e.target.image.value;
+    const location = e.target.location.value;
+    const description = e.target.description.value;
+    console.log(
+      title,
+      category,
+      minPrice,
+      maxPrice,
+      condition,
+      useTime,
+      productImg,
+      name,
+      email,
+      contact,
+      sellerImg,
+      location,
+      description,
+    );
+  };
+
   return (
     <div className="card-body ">
-      <fieldset className="fieldset">
-        <div className="flex gap-6 ">
+      <form onSubmit={handelCreateProduct} className="fieldset">
+        <div className="md:flex gap-6 space-y-2">
           <div className="w-6/12">
             <input
               type="text"
-              className="input rounded-2xl bg-white "
+              className="input rounded-2xl bg-white"
+              name="productTitle"
               placeholder="Product Title"
             />
           </div>
 
           <select
             className="w-5/12 round-2xl bg-white rounded-2xl p-3"
-            id="category "
+            name="category"
           >
-            <option className="required " value="">
-              Select a Category{" "}
+            <option className=" " value="">
+              Select a Category :
             </option>
             <option value="Electronics">Electronics</option>
             <option value="Fashion">Fashion</option>
@@ -27,25 +60,24 @@ const CreateProduct = () => {
         </div>
 
         <input
-          type="text "
+          type="number"
+          name="minPrice"
           className="input rounded-2xl bg-white"
-          required
           placeholder="Min Price You Want to Sale ($)"
         />
         <input
-          type="text"
+          type="number"
+          name="maxPrice"
           className="input rounded-2xl bg-white"
-          required
           placeholder="Max Price You Want to Sale ($)"
         />
-        <div className="flex items-center gap-96">
+        <div className="md:flex items-center gap-96">
           <div>
-            <h3 className="text-xl">Product Condition</h3>
+            <h3 className="text-xl">Product Condition : </h3>
             <div className="mt-5">
-              <label className="flex items-center text-xl gap-3 ">
+              <label className="md:flex items-center text-xl gap-3 ">
                 <input
                   className="w-5 h-5 "
-                  required
                   type="radio"
                   name="condition"
                   value="new"
@@ -55,10 +87,9 @@ const CreateProduct = () => {
             </div>
 
             <div>
-              <label className="flex items-center text-xl gap-3 ">
+              <label className="md:flex items-center text-xl gap-3 ">
                 <input
                   className="w-5 h-5"
-                  required
                   type="radio"
                   name="condition"
                   value="used"
@@ -68,28 +99,28 @@ const CreateProduct = () => {
             </div>
           </div>
           <div>
-            <h3 className="text-lg mb-3">Product using time</h3>
+            <h3 className="text-lg mb-3">Product using time : </h3>
             <input
               className="input rounded-2xl bg-white"
               type="text"
-              name=""
+              name="useTime"
               placeholder="e.g. 1 year 3 month "
             />
           </div>
         </div>
         <div className="mt-5">
-          <h3 className="text-lg">Your Product Image URL</h3>
+          <h3 className="text-lg">Your Product Image URL : </h3>
           <input
             className=" w-full h-10 p-2 text-lg rounded-2xl bg-white"
             type="text"
-            name=""
+            name="productImg"
             placeholder="https://..."
           />
         </div>
         <div className="mt-5">
-          <div className="flex w-full justify-between gap-3">
-            <div className="flex flex-col w-full ">
-              <label className="text-lg">Seller Name</label>
+          <div className="md:flex w-full justify-between gap-3 space-y-2">
+            <div className="md:flex flex-col w-full ">
+              <label className="text-lg">Seller Name : </label>
               <input
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
                 type="text"
@@ -97,8 +128,8 @@ const CreateProduct = () => {
                 placeholder="seller name"
               />
             </div>
-            <div className="flex flex-col w-full">
-              <label className="text-lg">Seller Email</label>
+            <div className="md:flex flex-col w-full">
+              <label className="text-lg">Seller Email : </label>
               <input
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
                 type="email"
@@ -107,18 +138,18 @@ const CreateProduct = () => {
               />
             </div>
           </div>
-          <div className="flex w-full justify-between gap-3 mt-5">
+          <div className="md:flex w-full justify-between gap-3 mt-5 space-y-2">
             <div className="flex flex-col w-full ">
-              <label className="text-lg">Seller Contact</label>
+              <label className="text-lg">Seller Contact : </label>
               <input
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
-                type="text"
+                type="number"
                 name="contact"
                 placeholder="e.g. +1-555-1234"
               />
             </div>
-            <div className="flex flex-col w-full">
-              <label className="text-lg">Seller image</label>
+            <div className="md:flex flex-col w-full">
+              <label className="text-lg">Seller image : </label>
               <input
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
                 type="text"
@@ -128,34 +159,26 @@ const CreateProduct = () => {
             </div>
           </div>
           <div className="mt-5">
-            <h3 className="text-lg">Location</h3>
+            <h3 className="text-lg">Location : </h3>
             <input
               className=" w-full h-10 p-2 text-lg rounded-2xl bg-white"
               type="text"
-              name=""
+              name="location"
               placeholder="City, Country"
             />
           </div>
         </div>
         <div className="mt-5">
-          <h3 className="text-lg">Simple Description About Your Product</h3>
+          <h3 className="text-lg">Simple Description About Your Product : </h3>
           <textarea
             className=" w-full h-10 p-2 text-lg rounded-2xl bg-white"
-            name=""
-            id=""
-          >
-            <input
-              type="text"
-              name="description"
-              placeholder="e.g. I bought this product 3 month ago. did not used more than 1/2 time. actually learning
- guitar is so tough..... "
-            />
-          </textarea>
+            name="description"
+          ></textarea>
         </div>
         <button className="btn btn-neutral bg-primary mt-4 rounded-2xl">
-          Login
+          Create Product
         </button>
-      </fieldset>
+      </form>
     </div>
   );
 };
