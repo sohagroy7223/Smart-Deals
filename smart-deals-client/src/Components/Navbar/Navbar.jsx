@@ -1,9 +1,10 @@
 import { use } from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
+  const navigate = useNavigate();
 
   const link = (
     <>
@@ -21,6 +22,9 @@ const Navbar = () => {
           <li>
             <NavLink to="/myBids">My Bids</NavLink>
           </li>
+          <li>
+            <NavLink to="/createProduct">Create Products</NavLink>
+          </li>
         </>
       )}
     </>
@@ -31,6 +35,7 @@ const Navbar = () => {
       .then(() => {
         // console.log(result);
         alert("Sign-out successful.");
+        navigate("/login");
       })
       .catch((error) => {
         console.log(error);
