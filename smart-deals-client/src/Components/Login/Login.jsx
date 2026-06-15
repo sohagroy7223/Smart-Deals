@@ -71,6 +71,7 @@ const Login = () => {
             className="input"
             name="email"
             ref={emailRef}
+            required
             autoComplete="email"
             placeholder="Email"
           />
@@ -79,6 +80,7 @@ const Login = () => {
             type="password"
             className="input"
             name="password"
+            required
             autoComplete="current-password"
             placeholder="Password"
           />
