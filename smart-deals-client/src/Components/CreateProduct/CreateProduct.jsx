@@ -48,7 +48,7 @@ const CreateProduct = () => {
       status: "pending",
     };
 
-    fetch("http://localhost:3000/myProducts/", {
+    fetch(`http://localhost:3000/myProducts?email=${email}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

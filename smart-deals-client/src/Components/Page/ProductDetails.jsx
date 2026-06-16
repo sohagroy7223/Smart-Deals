@@ -49,7 +49,7 @@ const ProductDetails = () => {
     const name = e.target.name.value;
     const email = e.target.email.value;
     const Bids = e.target.bids.value;
-    console.log(productId, name, email, Bids);
+    // console.log(productId, name, email, Bids);
     const newBid = {
       product: productId,
       buyer_name: name,

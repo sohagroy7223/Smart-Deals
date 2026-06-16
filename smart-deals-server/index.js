@@ -39,7 +39,15 @@ async function run() {
     });
 
     app.get("/myProducts", async (req, res) => {
-      const cursor = myProductsCollection.find();
+      const email = req.query.email;
+      const query = {};
+      console.log(req.query);
+
+      if (email) {
+        query.seller_email = email;
+      }
+
+      const cursor = myProductsCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
     });
@@ -91,7 +99,7 @@ async function run() {
       //   .skip(4)
       //   .project(projectsFields);
 
-      console.log(req.query);
+      // console.log(req.query);
       const email = req.query.email;
       const query = {};
       if (email) {

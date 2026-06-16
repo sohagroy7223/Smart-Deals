@@ -12,7 +12,7 @@ const Login = () => {
     signInWithGoogle();
     navigate("/")
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         const newUsers = {
           name: result.user.displayName,
           email: result.user.email,
@@ -29,7 +29,8 @@ const Login = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("after save user data in database", data);
+            // console.log("after save user data in database", data);
+            data;
           });
       })
       .catch((error) => {
@@ -45,7 +46,8 @@ const Login = () => {
 
     loginUser(email, password)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
+        result;
         navigate("/");
       })
       .catch((error) => {

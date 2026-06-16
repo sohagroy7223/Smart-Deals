@@ -94,7 +94,7 @@ const MyBids = () => {
                 </td>
                 <td>{bid.bid_price}</td>
                 {bid.status === "pending" ? (
-                  <td className="badge-warning mt-6 badge badge-outline">
+                  <td className="badge-warning mt-10 md:mt-6.5 badge badge-outline">
                     {bid.status}
                   </td>
                 ) : (
@@ -105,7 +105,7 @@ const MyBids = () => {
                 <th>
                   <div
                     onClick={() => handelDeleteBid(bid._id)}
-                    className="badge badge-outline cursor-pointer"
+                    className="badge badge-outline cursor-pointer text-[12px] md:text-sm"
                   >
                     Remove Bid
                   </div>

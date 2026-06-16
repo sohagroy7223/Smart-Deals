@@ -13,7 +13,7 @@ const Register = () => {
     const image = e.target.image.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(name, image, email, password);
+    // console.log(name, image, email, password);
 
     createUser(email, password)
       .then((result) => {
@@ -23,7 +23,7 @@ const Register = () => {
         emailVerification().then(() => {
           alert("please check your email and verified your email");
         });
-        console.log(user);
+        // console.log(user);
         const newUsers = {
           name: name,
           email: email,
@@ -48,7 +48,8 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log("after save user data in database", data);
+            // console.log("after save user data in database", data);
+            data;
           });
       })
       .catch((error) => {
