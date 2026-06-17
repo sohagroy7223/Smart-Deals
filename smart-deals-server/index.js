@@ -5,9 +5,45 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 3000;
 
+const { initializeApp, cert } = require("firebase-admin/app");
+const { getAuth } = require("firebase-admin/auth");
+
+const serviceAccount = require("./smart-deals-firebase-admin-key.json");
+
+initializeApp({
+  credential: cert(serviceAccount),
+});
+
 // middleware
 app.use(cors());
 app.use(express.json());
+
+const logger = (req, res, next) => {
+  console.log("logging information");
+  next();
+};
+
+const verifiedToken = async (req, res, next) => {
+  console.log("in the verified middleware", req.headers.authorization);
+  if (!req.headers.authorization) {
+    // don't allow to go there
+    return res.status(401).send({ message: "unAuthorization access" });
+  }
+
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    return res.status(401).send({ message: "unAuthorization access" });
+  }
+
+  try {
+    const userInfo = await getAuth().verifyIdToken(token);
+    console.log(" after token validation", userInfo);
+    next();
+  } catch (error) {
+    console.log("after token validation");
+    return res.status(401).send({ message: "Unauthorized access" });
+  }
+};
 
 // uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@crud-practice-cluster.l3ixzxm.mongodb.net/?appName=crud-practice-cluster`;
@@ -156,7 +192,8 @@ async function run() {
     });
 
     // BIDS RELATED APIS
-    app.get("/bids", async (req, res) => {
+    app.get("/bids", logger, verifiedToken, async (req, res) => {
+      console.log("headers", req.headers);
       const email = req.query.email;
       const query = {};
       if (email) {
