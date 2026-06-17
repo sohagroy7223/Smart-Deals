@@ -37,10 +37,11 @@ const verifiedToken = async (req, res, next) => {
 
   try {
     const userInfo = await getAuth().verifyIdToken(token);
+    req.token_email = userInfo.email;
     console.log(" after token validation", userInfo);
     next();
   } catch (error) {
-    console.log("after token validation");
+    console.log(" invalided token ");
     return res.status(401).send({ message: "Unauthorized access" });
   }
 };
@@ -193,10 +194,13 @@ async function run() {
 
     // BIDS RELATED APIS
     app.get("/bids", logger, verifiedToken, async (req, res) => {
-      console.log("headers", req.headers);
+      console.log("headers--", req);
       const email = req.query.email;
       const query = {};
       if (email) {
+        if (email !== req.token_email) {
+          return res.status(403).send({ message: "Forbidden access" });
+        }
         query.buyer_email = email;
       }
 

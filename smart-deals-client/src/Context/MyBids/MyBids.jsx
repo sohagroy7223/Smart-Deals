@@ -23,7 +23,7 @@ const MyBids = () => {
           setBids(data);
         });
     }
-  }, [user.email]);
+  }, [user]);
 
   const handelDeleteBid = (_id) => {
     Swal.fire({
@@ -95,7 +95,7 @@ const MyBids = () => {
                   Seller name
                   <br />
                   <span className="badge badge-ghost badge-sm">
-                    Seller email
+                    {bid.buyer_email}
                   </span>
                 </td>
                 <td>{bid.bid_price}</td>
