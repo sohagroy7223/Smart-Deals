@@ -8,23 +8,52 @@ const Navbar = () => {
 
   const link = (
     <>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      <li>
-        <NavLink to="/allProducts">All Products</NavLink>
-      </li>
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? "mr-4 font-bold text-blue-500 underline" : "mr-4"
+        }
+        to="/"
+      >
+        Home
+      </NavLink>
+
+      <NavLink
+        className={({ isActive }) =>
+          isActive ? "mr-4 font-bold text-blue-500 underline" : "mr-4"
+        }
+        to="/allProducts"
+      >
+        All Products
+      </NavLink>
+
       {user && (
         <>
-          <li>
-            <NavLink to="/myProducts">My Products</NavLink>
-          </li>
-          <li>
-            <NavLink to="/myBids">My Bids</NavLink>
-          </li>
-          <li>
-            <NavLink to="/createProduct">Create Products</NavLink>
-          </li>
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "mr-4 font-bold text-blue-500 underline" : "mr-4"
+            }
+            to="/myProducts"
+          >
+            My Products
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "mr-4 font-bold text-blue-500 underline" : "mr-4"
+            }
+            to="/myBids"
+          >
+            My Bids
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? "mr-4 font-bold text-blue-500 underline" : "mr-4"
+            }
+            to="/createProduct"
+          >
+            Create Products
+          </NavLink>
         </>
       )}
     </>
