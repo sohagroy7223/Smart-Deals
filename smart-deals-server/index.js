@@ -79,8 +79,11 @@ async function run() {
       const email = req.query.email;
       const query = {};
       // console.log(req.query);
-
+      // console.log(req);
       if (email) {
+        if (email !== req.token_email) {
+          return res.status(403).send({ message: "Forbidden access" });
+        }
         query.seller_email = email;
       }
 

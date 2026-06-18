@@ -6,7 +6,7 @@ import { AuthContext } from "../../Context/AuthContext";
 const MyProducts = () => {
   const [myProducts, setMyProducts] = useState([]);
   const { user } = use(AuthContext);
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     fetch(`http://localhost:3000/myProducts?email=${user.email}`, {
       headers: {
