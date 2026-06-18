@@ -1,16 +1,24 @@
+import { use } from "react";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../Context/AuthContext";
 
 const MyProducts = () => {
   const [myProducts, setMyProducts] = useState([]);
+  const { user } = use(AuthContext);
+  console.log(user);
   useEffect(() => {
-    fetch("http://localhost:3000/myProducts/")
+    fetch(`http://localhost:3000/myProducts?email=${user.email}`, {
+      headers: {
+        authorization: `bearer ${user.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         // console.log("after fetching", data);
         setMyProducts(data);
       });
-  }, []);
+  }, [user]);
 
   const handelDeleteProduct = (_id) => {
     Swal.fire({
@@ -35,6 +43,10 @@ const MyProducts = () => {
                 icon: "success",
               });
             }
+            const remainingMyProducts = myProducts.filter(
+              (myProduct) => myProduct._id !== _id,
+            );
+            setMyProducts(remainingMyProducts);
           });
       }
     });

@@ -1,6 +1,10 @@
+import { use } from "react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../Context/AuthContext";
 
 const CreateProduct = () => {
+  const { user } = use(AuthContext);
+  // console.log(user);
   const handelCreateProduct = (e) => {
     e.preventDefault();
     const title = e.target.productTitle.value;
@@ -78,6 +82,7 @@ const CreateProduct = () => {
           <div className="w-6/12">
             <input
               type="text"
+              required
               className="input rounded-2xl bg-white"
               name="productTitle"
               placeholder="Product Title"
@@ -87,10 +92,9 @@ const CreateProduct = () => {
           <select
             className="w-5/12 round-2xl bg-white rounded-2xl p-3"
             name="category"
+            required
           >
-            <option className=" " value="">
-              Select a Category :
-            </option>
+            <option value="">Select a Category :</option>
             <option value="Electronics">Electronics</option>
             <option value="Fashion">Fashion</option>
             <option value="Books">Books</option>
@@ -102,12 +106,14 @@ const CreateProduct = () => {
         <input
           type="number"
           name="minPrice"
+          required
           className="input rounded-2xl bg-white"
           placeholder="Min Price You Want to Sale ($)"
         />
         <input
           type="number"
           name="maxPrice"
+          required
           className="input rounded-2xl bg-white"
           placeholder="Max Price You Want to Sale ($)"
         />
@@ -144,6 +150,7 @@ const CreateProduct = () => {
               className="input rounded-2xl bg-white"
               type="text"
               name="useTime"
+              required
               placeholder="e.g. 1 year 3 month "
             />
           </div>
@@ -153,6 +160,7 @@ const CreateProduct = () => {
           <input
             className=" w-full h-10 p-2 text-lg rounded-2xl bg-white"
             type="text"
+            required
             name="productImg"
             placeholder="https://..."
           />
@@ -165,7 +173,8 @@ const CreateProduct = () => {
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
                 type="text"
                 name="name"
-                placeholder="seller name"
+                readOnly
+                defaultValue={user.displayName}
               />
             </div>
             <div className="md:flex flex-col w-full">
@@ -174,7 +183,8 @@ const CreateProduct = () => {
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
                 type="email"
                 name="email"
-                placeholder="seller email"
+                readOnly
+                defaultValue={user.email}
               />
             </div>
           </div>
@@ -184,6 +194,7 @@ const CreateProduct = () => {
               <input
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
                 type="number"
+                required
                 name="contact"
                 placeholder="e.g. +1-555-1234"
               />
@@ -193,6 +204,7 @@ const CreateProduct = () => {
               <input
                 className="h-10 p-3 text-lg rounded-2xl bg-white"
                 type="text"
+                required
                 name="image"
                 placeholder="https://..."
               />
@@ -202,6 +214,7 @@ const CreateProduct = () => {
             <h3 className="text-lg">Location : </h3>
             <input
               className=" w-full h-10 p-2 text-lg rounded-2xl bg-white"
+              required
               type="text"
               name="location"
               placeholder="City, Country"
@@ -213,6 +226,7 @@ const CreateProduct = () => {
           <textarea
             className=" w-full h-10 p-2 text-lg rounded-2xl bg-white"
             name="description"
+            required
           ></textarea>
         </div>
         <button className="btn btn-neutral bg-primary mt-4 rounded-2xl">

@@ -75,10 +75,10 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/myProducts", async (req, res) => {
+    app.get("/myProducts", verifiedToken, async (req, res) => {
       const email = req.query.email;
       const query = {};
-      console.log(req.query);
+      // console.log(req.query);
 
       if (email) {
         query.seller_email = email;
@@ -194,7 +194,7 @@ async function run() {
 
     // BIDS RELATED APIS
     app.get("/bids", logger, verifiedToken, async (req, res) => {
-      console.log("headers--", req);
+      // console.log("headers--", req);
       const email = req.query.email;
       const query = {};
       if (email) {
