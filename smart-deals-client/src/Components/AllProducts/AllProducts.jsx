@@ -6,7 +6,9 @@ const AllProducts = () => {
   // console.log(allProducts);
   return (
     <div>
-      <h3>All products is here</h3>
+      <h3 className=" text-3xl text-center p-6 font-bold">
+        All <span className="text-primary">Products</span> is here
+      </h3>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {allProducts.map((products) => (
           <Products key={products._id} products={products}></Products>
