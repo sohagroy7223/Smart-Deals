@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -67,6 +68,14 @@ async function run() {
     const bidsCollection = smartDb.collection("bids");
     const userCollection = smartDb.collection("user");
     const myProductsCollection = smartDb.collection("myProducts");
+
+    // JWT Related APIS
+    app.post("/getToken", (req, res) => {
+      const token = jwt.sign({ email: "sohag@gmail.com" }, "secrete", {
+        expiresIn: "1h",
+      });
+      res.send({ token: token });
+    });
 
     // MyProducts APIS
     app.post("/myProducts", async (req, res) => {
