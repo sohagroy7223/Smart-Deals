@@ -71,7 +71,8 @@ async function run() {
 
     // JWT Related APIS
     app.post("/getToken", (req, res) => {
-      const token = jwt.sign({ email: "sohag@gmail.com" }, "secrete", {
+      const loggedUser = req.body;
+      const token = jwt.sign(loggedUser, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
       res.send({ token: token });
