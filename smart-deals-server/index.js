@@ -24,8 +24,8 @@ const logger = (req, res, next) => {
   next();
 };
 
-const verifiedToken = async (req, res, next) => {
-  console.log("in the verified middleware", req.headers.authorization);
+const verifiedFirebaseToken = async (req, res, next) => {
+  // console.log("in the verified middleware", req.headers.authorization);
   if (!req.headers.authorization) {
     // don't allow to go there
     return res.status(401).send({ message: "unAuthorization access" });
@@ -45,6 +45,27 @@ const verifiedToken = async (req, res, next) => {
     console.log(" invalided token ");
     return res.status(401).send({ message: "Unauthorized access" });
   }
+};
+
+const verifiedJWTToken = async (req, res, next) => {
+  console.log("headers in middleware", req.headers);
+  const authorization = req.headers.authorization;
+  if (!authorization) {
+    return res.status(401).send({ message: "unAuthorization access" });
+  }
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    return res.status(401).send({ message: "unAuthorization access" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+    if (error) {
+      return res.status(401).send({ message: "unAuthorization access" });
+    }
+    console.log(decoded);
+    req.token_email = decoded.email;
+    next();
+  });
 };
 
 // uri
@@ -85,7 +106,7 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/myProducts", verifiedToken, async (req, res) => {
+    app.get("/myProducts", verifiedFirebaseToken, async (req, res) => {
       const email = req.query.email;
       const query = {};
       // console.log(req.query);
@@ -205,22 +226,37 @@ async function run() {
       res.send(result);
     });
 
-    // BIDS RELATED APIS
-    app.get("/bids", logger, verifiedToken, async (req, res) => {
-      // console.log("headers--", req);
+    // BIDS RELATED APIS with authentication firebase
+
+    app.get("/bids", verifiedJWTToken, async (req, res) => {
       const email = req.query.email;
       const query = {};
       if (email) {
-        if (email !== req.token_email) {
-          return res.status(403).send({ message: "Forbidden access" });
-        }
         query.buyer_email = email;
       }
-
+      if (email !== req.token_email) {
+        return res.status(403).send({ message: "forbidden access" });
+      }
       const cursor = bidsCollection.find(query);
       const result = await cursor.toArray();
       res.send(result);
     });
+
+    // app.get("/bids", logger, verifiedFirebaseToken, async (req, res) => {
+    //   // console.log("headers--", req);
+    //   const email = req.query.email;
+    //   const query = {};
+    //   if (email) {
+    //     if (email !== req.token_email) {
+    //       return res.status(403).send({ message: "Forbidden access" });
+    //     }
+    //     query.buyer_email = email;
+    // //   }
+
+    //   const cursor = bidsCollection.find(query);
+    //   const result = await cursor.toArray();
+    //   res.send(result);
+    // });
 
     app.get("/products/bids/:productId", async (req, res) => {
       const productId = req.params.productId;
@@ -237,7 +273,7 @@ async function run() {
     });
 
     // find all user data
-    app.get("bids", async (req, res) => {
+    app.get("/bids", async (req, res) => {
       const cursor = bidsCollection.find();
       const result = await cursor.toArray();
       res.send(result);

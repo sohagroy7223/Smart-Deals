@@ -14,7 +14,7 @@ const MyBids = () => {
     if (user?.email) {
       fetch(`http://localhost:3000/bids?email=${user.email}`, {
         headers: {
-          authorization: `bearer ${user.accessToken}`,
+          authorization: `bearer ${localStorage.getItem("token")}`,
         },
       })
         .then((res) => res.json())
@@ -24,6 +24,21 @@ const MyBids = () => {
         });
     }
   }, [user]);
+
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     fetch(`http://localhost:3000/bids?email=${user.email}`, {
+  //       headers: {
+  //         authorization: `bearer ${user.accessToken}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         // console.log("after fetching ", data);
+  //         setBids(data);
+  //       });
+  //   }
+  // }, [user]);
 
   const handelDeleteBid = (_id) => {
     Swal.fire({
