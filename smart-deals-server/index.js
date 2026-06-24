@@ -39,7 +39,7 @@ const verifiedFirebaseToken = async (req, res, next) => {
   try {
     const userInfo = await getAuth().verifyIdToken(token);
     req.token_email = userInfo.email;
-    console.log(" after token validation", userInfo);
+    // console.log(" after token validation", userInfo);
     next();
   } catch (error) {
     console.log(" invalided token ");
@@ -48,7 +48,7 @@ const verifiedFirebaseToken = async (req, res, next) => {
 };
 
 const verifiedJWTToken = async (req, res, next) => {
-  console.log("headers in middleware", req.headers);
+  // console.log("headers in middleware", req.headers);
   const authorization = req.headers.authorization;
   if (!authorization) {
     return res.status(401).send({ message: "unAuthorization access" });
@@ -62,7 +62,7 @@ const verifiedJWTToken = async (req, res, next) => {
     if (error) {
       return res.status(401).send({ message: "unAuthorization access" });
     }
-    console.log(decoded);
+    // console.log(decoded);
     req.token_email = decoded.email;
     next();
   });

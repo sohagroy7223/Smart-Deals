@@ -3,6 +3,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { use, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const ProductDetails = () => {
   const [bids, setBids] = useState([]);
@@ -32,13 +33,22 @@ const ProductDetails = () => {
   // console.log(data);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/bids/${productId}`)
-      .then((res) => res.json())
+    axios
+      .get(`http://localhost:3000/products/bids/${productId}`)
       .then((data) => {
-        // console.log("bids for this products", data);
-        setBids(data);
+        console.log(data.data);
+        setBids(data.data);
       });
   }, [productId]);
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/products/bids/${productId}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // console.log("bids for this products", data);
+  //       setBids(data);
+  //     });
+  // }, [productId]);
 
   const handelModalOpen = () => {
     modelRef.current.showModal();

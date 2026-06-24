@@ -50,6 +50,8 @@ const AuthProvider = ({ children }) => {
             // console.log("after get token", data.token);
             localStorage.setItem("token", data.token);
           });
+      } else {
+        localStorage.removeItem("token");
       }
       setLoading(false);
     });
