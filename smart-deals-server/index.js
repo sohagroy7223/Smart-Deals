@@ -272,12 +272,12 @@ async function run() {
       res.send(result);
     });
 
-    // find all user data
-    app.get("/bids", async (req, res) => {
-      const cursor = bidsCollection.find();
-      const result = await cursor.toArray();
-      res.send(result);
-    });
+    // // find all user data
+    // app.get("/bids", async (req, res) => {
+    //   const cursor = bidsCollection.find();
+    //   const result = await cursor.toArray();
+    //   res.send(result);
+    // });
 
     // find single user data
     app.get("/bids/:id", async (req, res) => {
